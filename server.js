@@ -1,6 +1,8 @@
 const express = require('express');
 const mongoose = require('mongoose');
 
+const todos = require('./routes/api/todos');
+
 const app = express();
 
 app.use(express.json());
@@ -10,32 +12,7 @@ const db = require('./config/keys').mongoURI;
 //Connect to db
 mongoose.connect(db).then(() => console.log("MongoDB Connected")).catch(err => console.log(err));
 
-
-
-app.get('/api/todos', (req, res) => {
-    const todos =         
-    [
-    {
-        id: 1,
-        text: 'Test 1',
-        day: 'today',
-        reminder: true,
-    },
-    {
-        id: 2,
-        text: 'Test 2',
-        day: 'tomorrow',
-        reminder: true,
-    },
-    {
-        id: 3,
-        text: 'Test 3',
-        day: 'today',
-        reminder: false,
-    },
-];
-res.json(todos);
-});
+app.use('/api/todos', todos);
 
 const port = process.env.PORT || 5000;
 
